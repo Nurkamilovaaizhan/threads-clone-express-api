@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
-const { UserController, PostController } = require('../controllers');
+const { UserController, PostController, CommentController, LikeController } = require('../controllers');
 const { authenticateToken } = require('../middleware/auth');
 
 // Показываем, где хранить файлы
@@ -28,5 +28,13 @@ router.post("/posts", authenticateToken, PostController.createPost);
 router.get("/posts", authenticateToken, PostController.getAllPosts);
 router.get("/posts/:id", authenticateToken, PostController.getPostById);
 router.delete("/posts/:id", authenticateToken, PostController.deletePost);
+
+// роуты комментариев
+router.post("/comments", authenticateToken, CommentController.createComment);
+router.delete("/comments/:id", authenticateToken, CommentController.deleteComment);
+
+// роуты лайков
+router.post("/likes", authenticateToken, LikeController.likePost);
+router.delete("/likes/:id", authenticateToken, LikeController.unlikePost);
 
 module.exports = router;
